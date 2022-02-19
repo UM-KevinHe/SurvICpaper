@@ -48,25 +48,20 @@ To use the included data, run:
 ``` -->
 
 
-Now, set relevant parameters and fit a model to the prepared data:
-
+Now, set a sequence of smoothing paramemter to choose from. 
 ```{r example.fit, eval=FALSE}
-stratum=rep(1, length(time))
-  data_NR <- data.frame(event=delta, time=time, z, strata=stratum, stringsAsFactors=F)
-  #Z.char <- paste0("X", 1:p)
-  Z.char <- "z"
-  fmla <- formula(paste0("Surv(time, event)~",
-                         paste(c(paste0("tv(", Z.char, ")"), "strata(strata)"), collapse="+")))
-lambda_all <- c(1:30)
-index <- 1
-for(lambda_index in 1:length(lambda_all)){
-  model_all[[index]] <- surtiver(fmla, data_NR, nsplines=K, spline ="P-spline", ties="none", tau=0.5, stop="ratch",
-                     method = "Newton", btr = btr_tmp, iter.max = 15, threads = 4, parallel = TRUE,
-                     lambda_spline = lambda_all[lambda_index],TIC_prox = FALSE, ord = 4, degree = 3, 
-                     fixedstep = FALSE,
-                     penalizestop = FALSE,
-                     ICLastOnly = TRUE)
-  index = index + 1
+#specify smoothing parameter lambda:
+lambda_spline = c(1:10)
+```
+
+Then set the relevant parameters and fit a model to the prepared data:
+```{r example.fit, eval=FALSE}
+models <- surtvep(event = delta, z = z, time = time, 
+                  lambda_spline = lambda_spline,
+                  spline="Smooth-spline", nsplines=8, ties="none", 
+                  tol=1e-6, iter.max=20L, method="Newton",
+                  btr="dynamic", stop="ratch", 
+                  parallel=TRUE, threads=3L, degree=3L)
 }
 ```
 
