@@ -65,4 +65,4 @@ models <- surtvep(event = delta, z = z, time = time,
 }
 ```
 
-
+![alt text](https://github.com/[UM-KevinHe]/[PenalizedNR]/blob/[plots]/N5000_p5_timevarying_v1_TIC_smoothcubic.png?raw=true)
