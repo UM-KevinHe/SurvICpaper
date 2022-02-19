@@ -34,77 +34,19 @@ library(splines)
 library(survival)
 ```
 
-To simulate a data set, use the following code chunk:
+Load a simple simulation data set with sample size of 2,000.
 
 ```{r example.simuate.data, eval=FALSE}
-# Simulate a data set
-p=1
-K=10
-N=1000 #sample size
-F=1 ###number of facility
-n_f = rep(N, F) #sample size for each facility
-N=sum(n_f)
-gamma = rep(0, F)
-range(gamma)
-gamma_subject=rep(gamma,n_f)
-F_pre=1:F
-facility=rep(F_pre, n_f)
-
-############generate data########################
-Sigma_z1<-AR1(0.6,p)
-
-#z= rmvnorm(N, mean=rep(0,p), sigma=Sigma_z1)
-z = rnorm(N, mean = 0, 1)
-
-z_012_rare=function(x){
-  
-  U=runif(1, 0.85, 0.95)
-  
-  x2=quantile(x,prob=U)
-  x3=x
-  x3[x<x2]=0
-  x3[x>x2]=1
-  return(x3)
-}
-
-z = z_012_rare(z)
-
-U=runif(N, 0,1)
-
-pre_time=rep(0, N)
-for (i in 1:(N)) {
-  f=function(t) {
-    integrand <- function(x) {0.5*exp(gamma_subject[i] +sin(3*pi*x/4)*(x<3)*z[i])}
-    
-    Lambda=integrate(integrand, lower = 0, upper = t)$value
-    Lambda+log(1-U[i])
-  }
-  r1 <- suppressWarnings(try(uniroot(f,  lower = 0, upper = 4), silent=TRUE))
-  if (class(r1) == "try-error"){    
-    pre_time[i]=4
-  }
-  else pre_time[i]=uniroot(f,  lower = 0, upper = 4)$root
-}
-
-pre_censoring=runif(N,0,3)
-pre_censoring=pre_censoring*(pre_censoring<3)+3*(pre_censoring>=3)
-tcens=(pre_censoring<pre_time) # censoring indicator
-delta=1-tcens
-time=pre_time*(delta==1)+pre_censoring*(delta==0)
-
-delta = delta[order(time)]
-facility=facility[order(time)]
-z = z[order(time)]
-time = time[order(time)]
+load("simulN2kOP2.RData")
 ```
 
-This data is also available in the included data sets that come with the package.
+<!-- This data is also available in the included data sets that come with the package.
 To use the included data, run:
-
 ```{r, eval=FALSE}
           # raw data
           # processed data
-```
+``` -->
+
 
 Now, set relevant parameters and fit a model to the prepared data:
 
