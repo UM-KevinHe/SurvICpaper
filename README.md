@@ -65,4 +65,9 @@ models <- surtvep(event = delta, z = z, time = time,
 }
 ```
 
+Give the estimation plot based on TIC.
+```{r example.fit, eval=FALSE}
+plot(models, IC = "TIC")
+}
+```
 ![alt text](plots/N5000_p5_timevarying_v1_TIC_smoothcubic.png)
