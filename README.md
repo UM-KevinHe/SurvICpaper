@@ -20,7 +20,7 @@ You can import the R package by:
 ``` r
 library(PenalizedNR)
 ```
-
+  
 
  
 ## Example
