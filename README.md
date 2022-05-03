@@ -65,7 +65,7 @@ The estimation results can be viewed by the `plot()` function.
 ```
 plot(fit1)
 ```
-<img src = "plots/10knots_sinfunc_n5000_seed2.png" width=50% height=50%> <img src = "plots/10knots_constant_n5000_seed13.png" width=50% height=50%>
+<img src = "plots/10knots_sinfunc_n5000_seed2.png" width=25% height=25%> <img src = "plots/10knots_constant_n5000_seed13.png" width=25% height=25%>
 
 
 
@@ -96,7 +96,7 @@ The resulting estimation plot with smoothing parameter chosen by TIC can be view
 plot(fit.spline, IC = "TIC")
 ```
 
-<img src = "plots/10knots_constant_n5000_seed_penalized13.png" width=50% height=50%> <img src = "plots/10knots_sinfunc_Penalized_NR_n5000_seed2.png" width=50% height=50%>
+<img src = "plots/10knots_constant_n5000_seed_penalized13.png" width=25% height=25%> <img src = "plots/10knots_sinfunc_Penalized_NR_n5000_seed2.png" width=25% height=25%>
 
 
 
