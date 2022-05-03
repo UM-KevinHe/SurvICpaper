@@ -1,4 +1,4 @@
-# PenalizedNR
+# surtve
 
 ## Cox Non-proportional Hazards model with penalization
 <!-- badges: start -->
@@ -8,11 +8,11 @@ PenalizedNR is an R package for fitting penalized Newton's method for the time-v
 
 ## Installation
 
-You can install the released version of PenalizedNR from [Github](https://github.com/umich-biostatistics/PenalizedNR) with:
+You can install the released version of PenalizedNR from [Github](https://github.com/umich-biostatistics/surtve) with:
 
 ``` r
 install.packages("devtools") # you need devtools to install packages from Github
-devtools::install_github("umich-biostatistics/PenalizedNR")
+devtools::install_github("umich-biostatistics/surtve")
 ```
 
 You can import the R package by:
