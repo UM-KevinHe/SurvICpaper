@@ -23,7 +23,7 @@ library (surtv)
   
 
  
-## Example
+## Newton's Method
 
 The data set in section 3.3.1 is included in the \textit{surtvp} as a built-in data set. The data set was named \textit{simulData} and its information can be viewed by
 
@@ -37,38 +37,6 @@ The `surtve()` function requires similar inputs to the familiar `coxph()` from t
 ```{r example.fit, eval=FALSE}
 surtvep(formula, data = matrix(), ...)
 ```
-
-This is a simple example estimating the simulation data set.
-```{r example.fit, eval=FALSE}
-fit1 <- surtvep(Surv(time, event)~., data = simulData)
-```
-
-The estimation results can be viewed by the `plot()` function.
-```
-plot(fit1)
-```
-![alt text](plots/10knots_sinfunc_n5000_seed2.png=250x250)
-![alt text](plots/10knots_constant_n5000_seed13.png=250x250)
-
-
-
-Now, set a sequence of smoothing paramemter to choose from. The default range is set as
-```{r example.fit, eval=FALSE}
-#specify smoothing parameter lambda:
-lambda_spline = c(1:10)
-
-#if not specified, the default range is set as follows, where n is the sample size
-lambda_spline = seq(0, n^(1/3), length.out = 10)
-```
-
-Then set the relevant parameters and fit a model to the prepared data:
-```{r example.fit, eval=FALSE}
-fit <- surtvep(event = delta, z = z, time = time, 
-                  lambda_spline = lambda_spline)
-}
-```
-
-The default penalty term here is the Smooth-spline, but P-spline is also available. 
 
 "nsplines" specifies the number of basis functions used and the default value is 10. 
 
@@ -88,6 +56,53 @@ The default penalty term here is the Smooth-spline, but P-spline is also availab
 
 "threads": integers indicating the number of threads used for parallel compuatation.
 
+This is a simple example estimating the simulation data set.
+```{r example.fit, eval=FALSE}
+fit1 <- surtvep(Surv(time, event)~., data = simulData)
+```
+
+The estimation results can be viewed by the `plot()` function.
+```
+plot(fit1)
+```
+<img src = "plots/10knots_sinfunc_n5000_seed2.png" width=50% height=50%> <img src = "plots/10knots_constant_n5000_seed13.png" width=50% height=50%>
+
+
+
+
+## Penalized Newton's method
+In order to add penalty to the penalized Newton's method, three additional parameters can be added.
+
+Now, set a sequence of smoothing paramemter to choose from. The default range is set as
+```{r example.fit, eval=FALSE}
+#specify smoothing parameter lambda:
+lambda_spline = c(1:10)
+
+#if not specified, the default range is set as follows, where n is the sample size
+lambda_spline = seq(0, n^(1/3), length.out = 10)
+```
+
+Then set the relevant parameters and fit a model to the prepared data:
+```{r example.fit, eval=FALSE}
+fit.spline <- surtvep(Surv(time, event)~., data = simulData, 
+               lambda = c(0:100),
+               spline = "Smooth-spline",
+               IC = "all")
+}
+```
+
+The resulting estimation plot with smoothing parameter chosen by TIC can be viewed by 
+```{r example.fit, eval=FALSE}
+plot(fit.spline, IC = "TIC")
+```
+
+<img src = "plots/10knots_constant_n5000_seed_penalized13.png" width=50% height=50%> <img src = "plots/10knots_sinfunc_Penalized_NR_n5000_seed2.png" width=50% height=50%>
+
+
+
+
+
+
 ```{r example.fit, eval=FALSE}
 fit <- surtvep(event = delta, z = z, time = time, 
                   lambda_spline = lambda_spline),
@@ -103,5 +118,4 @@ Give the estimation plot based on TIC.
 plot(models, IC = "TIC")
 }
 ```
-![alt text](plots/N5000_p5_timevarying_v1_TIC_smoothcubic.png)
 
