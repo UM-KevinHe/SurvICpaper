@@ -18,32 +18,38 @@ devtools::install_github("umich-biostatistics/PenalizedNR")
 You can import the R package by:
 
 ``` r
-library(PenalizedNR)
+library (surtv)
 ```
   
 
  
 ## Example
 
-This tutorial simulates a data set to demonstrate the functions provided by FRprovideR.
-
-```{r example, eval=FALSE}
-# load the package
-library(PenalizedNR)
-```
-
-Load a simple simulation data set with sample size of 2,000 and 2 binary predictors.
+The data set in section 3.3.1 is included in the \textit{surtvp} as a built-in data set. The data set was named \textit{simulData} and its information can be viewed by
 
 ```{r example.simuate.data, eval=FALSE}
-load("simulN2kOP2.RData")
+load("simulData.RData")
+str(simulData)
 ```
 
-<!-- This data is also available in the included data sets that come with the package.
-To use the included data, run:
-```{r, eval=FALSE}
-          # raw data
-          # processed data
-``` -->
+The `surtve()` function requires similar inputs to the familiar `coxph()` from the package survival.
+
+```{r example.fit, eval=FALSE}
+surtvep(formula, data = matrix(), ...)
+```
+
+This is a simple example estimating the simulation data set.
+```{r example.fit, eval=FALSE}
+fit1 <- surtvep(Surv(time, event)~., data = simulData)
+```
+
+The estimation results can be viewed by the `plot()` function.
+```
+plot(fit1)
+```
+
+
+
 
 
 Now, set a sequence of smoothing paramemter to choose from. The default range is set as
