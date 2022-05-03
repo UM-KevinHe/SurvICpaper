@@ -47,8 +47,8 @@ The estimation results can be viewed by the `plot()` function.
 ```
 plot(fit1)
 ```
-
-
+![alt text](plots/10knots_sinfunc_n5000_seed2.png=250x250)
+![alt text](plots/10knots_constant_n5000_seed13.png=250x250)
 
 
 
