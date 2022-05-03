@@ -101,21 +101,3 @@ plot(fit.spline, IC = "TIC")
 
 
 
-
-
-```{r example.fit, eval=FALSE}
-fit <- surtvep(event = delta, z = z, time = time, 
-                  lambda_spline = lambda_spline),
-                  spline="Smooth-spline", nsplines=8, ties="none", 
-                  tol=1e-6, iter.max=20L, method="Newton",
-                  btr="dynamic", stop="ratch", 
-                  parallel=TRUE, threads=3L, degree=3L)
-```
-
-
-Give the estimation plot based on TIC.
-```{r example.fit, eval=FALSE}
-plot(models, IC = "TIC")
-}
-```
-
