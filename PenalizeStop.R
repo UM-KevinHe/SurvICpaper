@@ -116,7 +116,10 @@ surtiver <- function(formula, data, spline="P-spline", nsplines=8, ties="Breslow
                                          btr=control$btr, stop=control$stop, TIC_prox = control$TIC_prox,
                                          fixedstep = control$fixedstep,
                                          difflambda = control$difflambda,
-                                         penalizestop = control$penalizestop)
+                                         penalizestop = control$penalizestop,
+                                         ICLastOnly = control$ICLastOnly)
+      
+      
       # row.names(fit$ctrl.pts) <- term.tv
       # fit$internal.knots <- unname(knots)
       fit$bases <- bases
@@ -255,7 +258,8 @@ surtiver <- function(formula, data, spline="P-spline", nsplines=8, ties="Breslow
                                          btr=control$btr, stop=control$stop, TIC_prox = TIC_prox,
                                          fixedstep=control$fixedstep,
                                          difflambda = control$difflambda,
-                                         penalizestop = control$penalizestop)
+                                         penalizestop = control$penalizestop,
+                                         ICLastOnly = control$ICLastOnly)
       # row.names(fit$ctrl.pts) <- term.tv
       # fit$internal.knots <- unname(knots)
       fit$bases <- bases
@@ -311,7 +315,7 @@ surtiver.control <- function(tol=1e-9, iter.max=20L, method="Newton", lambda=1e8
   if (parallel & threads==1L)
     stop(paste("Invalid number of threads for parallel computing!",
                "It should be greater than one."))
-  if (!stop %in% c("incre", "ratch", "relch")) stop("Invalid stopping rule!")
+  if (!stop %in% c("incre", "ratch", "relch", "all")) stop("Invalid stopping rule!")
   if (!is.numeric(degree) | degree < 2L) stop("Invalid degree for spline!")
   if (ICLastOnly) {penalizestop = FALSE} 
   list(tol=tol, iter.max=as.integer(iter.max), method=method, lambda=lambda,
@@ -446,6 +450,17 @@ VarianceMatrix <- function(formula, data, spline="P-spline", nsplines=8, ties="B
         }
       }
       SmoothMatrix  <- t(G_matrix)%*%W_matrix%*%G_matrix
+      
+      fit <-  VarianceMatrixCalculate_bresties(event = data[,term.event], data[,term.time], 
+                                              Z_tv = as.matrix(data[,term.tv]), B_spline = as.matrix(bases), 
+                                              theta = theta_opt_lambda, 
+                                              lambda_i = opt_lambda,
+                                              SmoothMatrix  = SmoothMatrix,
+                                              SplineType    = "smooth-spline",
+                                              method=control$method, 
+                                              lambda=control$lambda,
+                                              factor=control$factor,
+                                              parallel=control$parallel, threads=control$threads)
 
     } else if (ties == "none"){
       knots <- 
@@ -491,7 +506,8 @@ VarianceMatrix <- function(formula, data, spline="P-spline", nsplines=8, ties="B
       }
       SmoothMatrix  <- t(G_matrix)%*%W_matrix%*%G_matrix
       
-      fit <-  VarianceMatrixCalculate(event = data[,term.event], Z_tv = as.matrix(data[,term.tv]), B_spline = as.matrix(bases), 
+      fit <-  VarianceMatrixCalculate(event = data[,term.event], 
+                                      Z_tv = as.matrix(data[,term.tv]), B_spline = as.matrix(bases), 
                                       theta = theta_opt_lambda, 
                                       lambda_i = opt_lambda,
                                       SmoothMatrix  = SmoothMatrix,
@@ -512,3 +528,4 @@ VarianceMatrix <- function(formula, data, spline="P-spline", nsplines=8, ties="B
   
   
 }
+
