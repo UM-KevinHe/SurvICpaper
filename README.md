@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-PenalizedNR is an R package for fitting penalized Newton's method for the time-varying effects model using mAIC, TIC, GIC as information criteria, in particular we span the parameter using basis functions. Utilities for carrying out post-fitting visualization, summarization, and inference are also provided.
+PenalizedNR is an R package for fitting penalized Newton's method for the time-varying effects model using mAIC, TIC, GIC and HTIC as information criteria, in particular we span the parameter using basis functions. Utilities for carrying out post-fitting visualization, summarization, and inference are also provided.
 
 ## Installation
 
@@ -97,6 +97,7 @@ plot(fit.spline, IC = "TIC")
 ```
 
 <img src = "plots/10knots_constant_n5000_seed_penalized13.png" width=25% height=25%> <img src = "plots/10knots_sinfunc_Penalized_NR_n5000_seed2.png" width=25% height=25%>
+
 
 
 
