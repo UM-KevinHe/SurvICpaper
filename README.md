@@ -6,7 +6,11 @@
 
 PenalizedNR is an R package for fitting penalized Newton's method for the time-varying effects model using mAIC, TIC, GIC and HTIC as information criteria, in particular we span the parameter using basis functions. Utilities for carrying out post-fitting visualization, summarization, and inference are also provided.
 
-## Installation
+This repositary provides simple example codes to implement the methods from paper "Using Information Criteria to Select Smoothing Parameters when Analyzing Survival Data with Time-Varying Coefficient Hazard Models". Forward to 'https://github.com/UM-KevinHe/surtvep' for a detailed tutorial. 
+
+
+
+## Preparation
 
 You can install the released version of PenalizedNR from [Github](https://github.com/umich-biostatistics/surtve) with:
 
